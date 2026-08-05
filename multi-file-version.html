@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voltz RPP Startup Checklist</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <div class="brand-header">
+      <img src="voltz-logo.png" alt="Voltz Logo" />
+      <div>
+        <div class="brand-text">RAPTOR POWER SYSTEMS / VOLTZ</div>
+        <div style="font-size:10px; color:#8a8f99; letter-spacing:1px;">EST. 1994</div>
+      </div>
+    </div>
+
+    <header class="page-header">
+      <div class="protocol">SYSTEM PROTOCOL // FIELD COMMISSIONING</div>
+      <h1>RPP Startup Checklist</h1>
+      <p class="subtext">
+        Offline-capable. Fill out on phone, tablet, or laptop. Print to PDF and archive.
+      </p>
+      <p class="notice">
+        After printing, save the PDF into the <strong>submissions</strong> folder in this directory.
+      </p>
+    </header>
+
+    <form id="checklistForm">
+      <section class="card">
+        <h2>Required Information</h2>
+        <div class="grid two">
+          <label>
+            Date
+            <input type="date" name="date" />
+          </label>
+          <label>
+            Serial #
+            <input type="text" name="serialNumber" placeholder="Unit serial number" />
+          </label>
+          <label>
+            Tech Name
+            <input type="text" name="techName" />
+          </label>
+          <label>
+            Commissioning Company
+            <input type="text" name="commissioningCompany" />
+          </label>
+          <label>
+            POC
+            <input type="text" name="poc" />
+          </label>
+          <label>
+            Unit Rating
+            <input type="text" name="unitRating" />
+          </label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Pre Startup Checklist</h2>
+
+        <div class="check-row">
+          <label class="check-label">
+            <input type="checkbox" name="loto" />
+            LOTO &amp; Live Dead Live Complete
+          </label>
+        </div>
+
+        <div class="grid two">
+          <label>
+            Permanent installation?
+            <select name="permanentInstallation">
+              <option value=""></option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
+
+          <label>
+            Unit exterior free of damage?
+            <select name="unitExteriorDamage">
+              <option value=""></option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
+
+          <label>
+            Interior free of damage?
+            <select name="interiorDamage">
+              <option value=""></option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
+
+          <label>
+            Cleaned inside and out of construction debris?
+            <select name="cleanedDebris">
+              <option value=""></option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
+
+          <label>
+            All bare metals shielded / clearance acceptable?
+            <select name="bareMetalsShielded">
+              <option value=""></option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
+
+          <label>
+            All breakers installed and opened?
+            <select name="breakersInstalledOpened">
+              <option value=""></option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="check-list">
+          <label class="check-label"><input type="checkbox" name="exteriorPanelsRemoved" /> Exterior panels removed</label>
+          <label class="check-label"><input type="checkbox" name="packingRemoved" /> Packing material removed</label>
+          <label class="check-label"><input type="checkbox" name="wireCrimpsChecked" /> Check all control and power wire crimps/plugs for good connections</label>
+          <label class="check-label"><input type="checkbox" name="wireSizeCorrect" /> Verify customer wire size is correct</label>
+          <label class="check-label"><input type="checkbox" name="cabinetGrounded" /> Cabinet properly grounded; verify external ground wire brought into cabinet and connected to ground bus bar</label>
+          <label class="check-label"><input type="checkbox" name="harnessInspected" /> Wiring harnesses inspected for worn/damaged insulation</label>
+          <label class="check-label"><input type="checkbox" name="breakerOhmChecks" /> Breaker Ohm checks</label>
+        </div>
+
+        <div class="grid two">
+          <label>
+            CT Manufacturer
+            <input type="text" name="ctManufacturer" />
+          </label>
+          <label>
+            Breaker Manufacturer
+            <input type="text" name="breakerManufacturer" />
+          </label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Initial Power &amp; Functional Checks</h2>
+
+        <label>
+          Record Phase Rotation
+          <input type="text" name="phaseRotation" />
+        </label>
+
+        <div class="meter-group">
+          <h3>Closed Input Breaker Voltage Drop (&lt; 2 VAC)</h3>
+          <div class="grid three">
+            <label>A - A<input type="number" step="0.01" name="dropAA" /></label>
+            <label>B - B<input type="number" step="0.01" name="dropBB" /></label>
+            <label>C - C<input type="number" step="0.01" name="dropCC" /></label>
+          </div>
+        </div>
+
+        <div class="meter-group">
+          <h3>Input Display Voltage L to L</h3>
+          <div class="grid three">
+            <label>AB<input type="number" step="0.01" name="displayVllAB" /></label>
+            <label>BC<input type="number" step="0.01" name="displayVllBC" /></label>
+            <label>CA<input type="number" step="0.01" name="displayVllCA" /></label>
+          </div>
+        </div>
+
+        <div class="meter-group">
+          <h3>Input Meter Voltage L to L</h3>
+          <div class="grid three">
+            <label>AB<input type="number" step="0.01" name="meterVllAB" /></label>
+            <label>BC<input type="number" step="0.01" name="meterVllBC" /></label>
+            <label>CA<input type="number" step="0.01" name="meterVllCA" /></label>
+          </div>
+        </div>
+
+        <div class="meter-group">
+          <h3>Input Display Voltage L to N</h3>
+          <div class="grid three">
+            <label>AN<input type="number" step="0.01" name="displayVlnAN" /></label>
+            <label>BN<input type="number" step="0.01" name="displayVlnBN" /></label>
+            <label>CN<input type="number" step="0.01" name="displayVlnCN" /></label>
+          </div>
+        </div>
+
+        <div class="meter-group">
+          <h3>Input Meter Voltage L to N</h3>
+          <div class="grid three">
+            <label>AN<input type="number" step="0.01" name="meterVlnAN" /></label>
+            <label>BN<input type="number" step="0.01" name="meterVlnBN" /></label>
+            <label>CN<input type="number" step="0.01" name="meterVlnCN" /></label>
+          </div>
+        </div>
+
+        <div class="meter-group">
+          <h3>Input Display Current</h3>
+          <div class="grid three">
+            <label>A<input type="number" step="0.01" name="displayCurrentA" /></label>
+            <label>B<input type="number" step="0.01" name="displayCurrentB" /></label>
+            <label>C<input type="number" step="0.01" name="displayCurrentC" /></label>
+          </div>
+        </div>
+
+        <div class="meter-group">
+          <h3>Input Meter Current</h3>
+          <div class="grid three">
+            <label>A<input type="number" step="0.01" name="meterCurrentA" /></label>
+            <label>B<input type="number" step="0.01" name="meterCurrentB" /></label>
+            <label>C<input type="number" step="0.01" name="meterCurrentC" /></label>
+          </div>
+        </div>
+
+        <label>
+          DC Voltage
+          <input type="number" step="0.01" name="dcVoltage" />
+        </label>
+      </section>
+
+      <section class="card">
+        <h2>Customer Communication Integration</h2>
+        <div class="grid two">
+          <label>
+            Comms wired according to submittal?
+            <select name="commsWired">
+              <option value=""></option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
+
+          <label>
+            Power up sequence followed?
+            <select name="powerUpSequence">
+              <option value=""></option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
+
+          <label>
+            Networking completed as expected?
+            <select name="networkingCompleted">
+              <option value=""></option>
+              <option>Yes</option>
+              <option>No</option>
+              <option>N/A</option>
+            </select>
+          </label>
+
+          <label>
+            RTU Panel Firmware Version
+            <input type="text" name="rtuFirmware" />
+          </label>
+
+          <label>
+            Controller Firmware Version
+            <input type="text" name="controllerFirmware" />
+          </label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Power Checks</h2>
+
+        <div class="meter-group">
+          <h3>Initial Output Voltage (L-L)</h3>
+          <div class="grid three">
+            <label>AB<input type="number" step="0.01" name="outputVllAB" /></label>
+            <label>BC<input type="number" step="0.01" name="outputVllBC" /></label>
+            <label>CA<input type="number" step="0.01" name="outputVllCA" /></label>
+          </div>
+        </div>
+
+        <div class="meter-group">
+          <h3>Initial Output Current</h3>
+          <div class="grid three">
+            <label>A<input type="number" step="0.01" name="outputCurrentA" /></label>
+            <label>B<input type="number" step="0.01" name="outputCurrentB" /></label>
+            <label>C<input type="number" step="0.01" name="outputCurrentC" /></label>
+          </div>
+        </div>
+
+        <div class="grid two">
+          <label>
+            Power
+            <input type="text" name="powerReading" />
+          </label>
+
+          <label>
+            Temperature
+            <input type="text" name="temperatureReading" />
+          </label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Close Out</h2>
+        <div class="grid two">
+          <label>
+            Unit powered off and locked?
+            <select name="poweredOffLocked">
+              <option value=""></option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
+
+          <label>
+            Onsite Hours
+            <input type="number" step="0.01" name="onsiteHours" />
+          </label>
+        </div>
+
+        <label>
+          Work Summary
+          <textarea name="workSummary" rows="5" placeholder="Notes on work performed..."></textarea>
+        </label>
+
+        <label>
+          Customer POC
+          <input type="text" name="closeoutPoc" />
+        </label>
+      </section>
+
+      <section class="card">
+        <h2>Technician Signature</h2>
+        <div class="grid two">
+          <label>
+            Technician Name
+            <input type="text" name="technicianName" />
+          </label>
+
+          <label>
+            Signature Date
+            <input type="date" name="signatureDate" />
+          </label>
+        </div>
+
+        <label>
+          Signature
+          <input type="text" name="signatureText" placeholder="Type name or sign after printing" />
+        </label>
+        <div class="signature-line"></div>
+      </section>
+
+      <div class="actions">
+        <button type="button" id="saveBtn">Save Form</button>
+        <button type="button" id="printBtn" class="primary">Print to PDF</button>
+        <button type="button" id="exportBtn">Export Data</button>
+        <button type="reset" id="resetBtn" class="danger">Reset</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
