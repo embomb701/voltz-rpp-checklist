@@ -449,6 +449,9 @@ function loadPDU() {
 }
 
 function printPDU() {
+  // Open the Google Drive folder automatically
+  window.open("https://drive.google.com/drive/folders/1A-smlu8EdYGwOcQSEInHHLXD8xxVms91?usp=sharing", "_blank");
+
   const serial = document.querySelector('[name="serial"]')?.value || 'NOSER';
   const date = document.querySelector('[name="date"]')?.value || new Date().toISOString().slice(0,10);
   document.title = `Voltz-PDU-Startup-${serial}-${date}`;

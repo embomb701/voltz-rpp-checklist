@@ -406,6 +406,9 @@ function initPhotoUpload() {
 }
 
 function printTS() {
+  // Open the Google Drive folder automatically
+  window.open("https://drive.google.com/drive/folders/1A-smlu8EdYGwOcQSEInHHLXD8xxVms91?usp=sharing", "_blank");
+
   // Inject photos into a printable section if not already
   const form = document.getElementById('tsForm');
   let photoSection = document.getElementById('printPhotos');

@@ -729,6 +729,7 @@ button.danger {
       <div class="actions">
         <button type="button" id="saveBtn">Save Form</button>
         <button type="button" id="printBtn" class="primary" title="Save the PDF then upload to the Google Drive folder">Print to PDF</button>
+        <button type="button" onclick="window.open('https://drive.google.com/drive/folders/1A-smlu8EdYGwOcQSEInHHLXD8xxVms91?usp=sharing', '_blank')">Open Google Drive Folder</button>
         <button type="button" id="exportBtn">Export Data</button>
         <button type="reset" id="resetBtn" class="danger">Reset</button>
       </div>
@@ -822,9 +823,12 @@ printBtn.addEventListener("click", () => {
 
   document.title = `Voltz-RPP-Startup-${serial}-${date}`;
 
+  // Open Google Drive folder so they can save directly there
+  window.open("https://drive.google.com/drive/folders/1A-smlu8EdYGwOcQSEInHHLXD8xxVms91?usp=sharing", "_blank");
+
   setTimeout(() => {
     window.print();
-    document.title = originalTitle; // restore after print dialog
+    document.title = originalTitle;
   }, 50);
 });
 
