@@ -728,14 +728,14 @@ button.danger {
       </div>
       <div class="actions">
         <button type="button" id="saveBtn">Save Form</button>
-        <button type="button" id="printBtn" class="primary" title="Print to PDF, then upload the saved file to the Google Drive folder (opens after you save)">Print to PDF</button>
+        <button type="button" id="printBtn" class="primary" title="Print to PDF, then save to the Google Drive folder (see note below)">Print to PDF</button>
         <button type="button" onclick="window.open('https://drive.google.com/drive/folders/1A-smlu8EdYGwOcQSEInHHLXD8xxVms91?usp=sharing', '_blank')">Open Google Drive Folder</button>
         <button type="button" id="exportBtn">Export Data</button>
         <button type="reset" id="resetBtn" class="danger">Reset</button>
       </div>
       <small style="display:block; text-align:center; margin-top:8px; color:#8a8f99; font-size:0.8rem;">
-  1. Click <strong>Print to PDF</strong> and select "Save as PDF"<br>
-  2. After saving, the <a href="https://drive.google.com/drive/folders/1A-smlu8EdYGwOcQSEInHHLXD8xxVms91?usp=sharing" target="_blank" style="color:#f4c20d;">Google Drive folder</a> will open automatically — upload the file there
+  After printing, save the PDF to this folder:<br>
+  <a href="https://drive.google.com/drive/folders/1A-smlu8EdYGwOcQSEInHHLXD8xxVms91?usp=sharing" target="_blank" style="color:#f4c20d; font-weight:600;">Google Drive Submissions Folder</a>
 </small>
     </form>
   </div>
@@ -825,9 +825,6 @@ printBtn.addEventListener("click", () => {
   const originalTitle = document.title;
 
   document.title = `Voltz-RPP-Startup-${serial}-${date}`;
-
-  // Open Google Drive folder so they can save directly there
-  window.open("https://drive.google.com/drive/folders/1A-smlu8EdYGwOcQSEInHHLXD8xxVms91?usp=sharing", "_blank");
 
   setTimeout(() => {
     window.print();
