@@ -110,6 +110,14 @@ body {
 }
 .subtext { margin: 4px 0; color: var(--muted); font-size: 0.95rem; }
 
+.field-service {
+  margin: 2px 0 8px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
 .card {
   background: var(--card);
   border: 1px solid var(--card-border);
@@ -123,11 +131,6 @@ body {
   font-weight: 700;
   color: var(--accent);
   letter-spacing: 0.5px;
-}
-.card h3 {
-  margin: 0 0 10px;
-  font-size: 0.9rem;
-  color: var(--accent);
 }
 
 .grid {
@@ -174,6 +177,9 @@ button {
     <div class="nav-brand">VOLTZ FIELD COMMISSIONING</div>
     <div class="nav-links">
       <a href="index.html" class="nav-link">RPP Startup</a>
+      <a href="troubleshooting.html" class="nav-link">Troubleshooting</a>
+      <a href="site-visit.html" class="nav-link" title="General site visit or any other field report">Site Visit</a>
+      <a href="troubleshooting.html" class="nav-link">Troubleshooting</a>
       <a href="pdu-startup.html" class="nav-link active">PDU Startup</a>
     </div>
   </div>
@@ -191,6 +197,7 @@ button {
     <header class="page-header">
       <div class="protocol">SYSTEM PROTOCOL // PDU STARTUP</div>
       <h1>PDU Startup Checklist</h1>
+      <p class="field-service">Field Service Report</p>
       <p class="subtext">
         Complete and email to RM/DoS upon completion. Minimum of 4 startups per day.
       </p>
@@ -209,6 +216,8 @@ button {
 
     <div class="card">
       <h2>Required Information</h2>
+        <label class="warranty-label" style="grid-column: 1 / -1;"><input type="checkbox" name="warranty" /> <strong>Warranty?</strong></label>
+        <label class="warranty-label" style="grid-column: 1 / -1;"><input type="checkbox" name="warranty" /> <strong>Warranty?</strong></label>
       <div class="grid">
         <label>1. Tech Name<input type="text" name="techName" /></label>
         <label>2. Date<input type="date" name="date" onclick="this.showPicker && this.showPicker()" /></label>
@@ -369,9 +378,22 @@ button {
     </div>
 
     <div style="text-align:center; margin-top:20px;">
+      <div class="card">
+        <h2>Photos</h2>
+        <input type="file" id="photoInputPDU" accept="image/*" multiple />
+        <div id="photoPreviewPDU" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;"></div>
+        <small style="color:#8a8f99; font-size:0.8rem;">Photos will be included when printing to PDF.</small>
+      </div>
+      <div class="card">
+        <h2>Photos</h2>
+        <input type="file" id="photoInputPDU" accept="image/*" multiple />
+        <div id="photoPreviewPDU" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;"></div>
+        <small style="color:#8a8f99;font-size:0.8rem;">Photos will be included when printing to PDF.</small>
+      </div>
       <button onclick="savePDU()">Save</button>
-      <button onclick="printPDU()">Print to PDF</button>
+      <button onclick="printPDU()" title="Save the PDF safely to the appropriate drive folder">Print to PDF</button>
     </div>
+    <small style="display:block; text-align:center; margin-top:8px; color:#8a8f99; font-size:0.8rem;">Save the PDF safely to the appropriate drive folder</small>
   </div>
 
 <script>

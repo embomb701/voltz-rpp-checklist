@@ -325,19 +325,10 @@ button.danger {
   }
 }
 
-@media print { .top-nav { display: none !important; } body, .app { padding-top: 0 !important; margin-top: 0 !important; } }
-.top-nav { background:#0f1116; border-bottom:1px solid #24272e; padding:8px 16px; position:sticky; top:0; z-index:100; font-size:13px; } .top-nav .nav-inner { max-width:980px; margin:0 auto; display:flex; align-items:center; gap:16px; flex-wrap:wrap; } .top-nav .nav-brand { color:#f4c20d; font-weight:600; letter-spacing:1px; font-size:12px; margin-right:12px; } .top-nav .nav-links { display:flex; gap:4px; } .top-nav .nav-link { color:#e6e8eb; padding:4px 14px; text-decoration:none; border-radius:4px; } .top-nav .nav-link:hover { background:#1f2229; color:#f4c20d; } .top-nav .nav-link.active { background:#1f2229; color:#f4c20d; font-weight:600; } @media print { .top-nav { display:none !important; } .app { padding-top:0 !important; margin-top:0 !important; } }
 </style>
 </head>
-<body>
-<div class="top-nav" style="background:#0f1116;border-bottom:1px solid #24272e;padding:8px 16px;position:sticky;top:0;z-index:100;font-size:13px;">
-  <div style="max-width:980px;margin:0 auto;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-    <div style="color:#f4c20d;font-weight:600;letter-spacing:1px;font-size:12px;margin-right:12px;">VOLTZ FIELD COMMISSIONING</div>
-    <div style="display:flex;gap:4px;">
-      <a href="index.html" style="color:#e6e8eb;padding:4px 14px;text-decoration:none;border-radius:4px;background:#1f2229;color:#f4c20d;font-weight:600;">RPP Startup</a>
-      <a href="pdu-startup.html" style="color:#e6e8eb;padding:4px 14px;text-decoration:none;border-radius:4px;">PDU Startup</a>
-    </div>
-  </div>
+<body><div style="background:#1f2229; padding:8px 12px; font-size:12px; color:#f4c20d; text-align:center; border-bottom:1px solid #333;">
+Single-file version • Works offline • Download and open directly on any device
 </div>
   <div class="app">
     <div class="brand-header">
@@ -362,10 +353,11 @@ button.danger {
     <form id="checklistForm">
       <section class="card">
         <h2>Required Information</h2>
+        <label class="warranty-label" style="grid-column: 1 / -1;"><input type="checkbox" name="warranty" /> <strong>Warranty?</strong></label>
         <div class="grid two">
           <label>
             Date
-            <input type="date" name="date" onclick="this.showPicker && this.showPicker()" />
+            <input type="date" name="date" />
           </label>
           <label>
             Serial #
@@ -682,6 +674,12 @@ button.danger {
         <div class="signature-line"></div>
       </section>
 
+      <div class="card">
+        <h2>Photos</h2>
+        <input type="file" id="photoInputRPP" accept="image/*" multiple />
+        <div id="photoPreviewRPP" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;"></div>
+        <small style="color:#8a8f99;font-size:0.8rem;">Photos will be included when printing to PDF.</small>
+      </div>
       <div class="actions">
         <button type="button" id="saveBtn">Save Form</button>
         <button type="button" id="printBtn" class="primary">Print to PDF</button>
@@ -801,6 +799,32 @@ resetBtn.addEventListener("click", () => {
 
 loadFromLocal();
 
+let rppPhotos = [];
+const rppInput = document.getElementById("photoInputRPP");
+if (rppInput) {
+  rppInput.addEventListener("change", function() {
+    Array.from(this.files).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = e => { rppPhotos.push(e.target.result); renderRPPPhotos(); };
+      reader.readAsDataURL(file);
+    });
+    this.value = "";
+  });
+}
+function renderRPPPhotos() {
+  const c = document.getElementById("photoPreviewRPP"); if (!c) return;
+  c.innerHTML = "";
+  rppPhotos.forEach((src, i) => {
+    const d = document.createElement("div"); d.style.position="relative";
+    d.innerHTML = `<img src="${src}" style="max-width:120px;max-height:120px;border:1px solid #333;border-radius:4px;margin:2px;">`;
+    const btn = document.createElement("button"); btn.textContent="×"; btn.style.cssText="position:absolute;top:-4px;right:-4px;background:#c0392b;color:#fff;border:none;width:16px;height:16px;border-radius:50%;font-size:11px;cursor:pointer;";
+    btn.onclick = () => { rppPhotos.splice(i,1); renderRPPPhotos(); };
+    d.appendChild(btn); c.appendChild(d);
+  });
+}
+window.addEventListener("beforeprint", () => {
+  // ensure photos are visible for print
+});
 </script>
 </body>
 </html>
