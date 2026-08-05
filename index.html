@@ -34,7 +34,14 @@ body {
 .app {
   max-width: 980px;
   margin: 0 auto;
-  padding: 16px;
+  padding: 16px 20px;
+}
+
+@media (min-width: 640px) {
+  .app {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
 }
 
 .brand-header {
@@ -57,10 +64,33 @@ body {
 }
 
 .page-header {
+  position: relative;
+  padding-left: 90px;
+  text-align: center;
   margin-bottom: 20px;
   padding-bottom: 16px;
   border-bottom: 1px solid var(--line);
 }
+.page-header img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 77px;
+  width: auto;
+}
+.page-header .protocol {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.page-header h1 {
+  margin: 0 0 4px;
+  font-size: 1.65rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
 
 .page-header h1 {
   margin: 0 0 4px;
@@ -243,8 +273,17 @@ button.danger {
   }
 
   .app {
-    padding: 12px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 16px 20px;
+}
+
+@media (min-width: 640px) {
+  .app {
+    padding-left: 40px;
+    padding-right: 40px;
   }
+}
 
   .card {
     padding: 16px;
@@ -263,9 +302,17 @@ button.danger {
   }
 
   .app {
-    max-width: 100%;
-    padding: 20px 30px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 16px 20px;
+}
+
+@media (min-width: 640px) {
+  .app {
+    padding-left: 40px;
+    padding-right: 40px;
   }
+}
 
   .brand-header img {
     height: 38px;
@@ -342,24 +389,11 @@ button.danger {
     </div>
   </div>
 </div>
-  <div class="app">
-        <div class="brand-header" style="display:flex; align-items:center; gap:14px; margin-bottom:8px;">
-      <img src="raptor-logo.png" alt="Raptor Logo" style="height:70px; width:auto; flex-shrink:0;" />
-      <div>
-        <div class="brand-text">RAPTOR POWER SYSTEMS / VOLTZ</div>
-        <div style="font-size:10px; color:#8a8f99; letter-spacing:1.5px;">EST. 1994</div>
-      </div>
-    </div>
-    </div>
-
-    <header class="page-header">
+  <div class="app"><header class="page-header">
+      <img src="raptor-logo.png" alt="Raptor Logo" />
       <div class="protocol">SYSTEM PROTOCOL // FIELD COMMISSIONING</div>
       <h1>RPP Startup Checklist</h1>
       <p class="field-service">Field Service Report</p>
-      <p class="subtext">
-      </p>
-      <p class="notice">
-      </p>
     </header>
 
     <form id="checklistForm">
