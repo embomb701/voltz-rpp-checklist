@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voltz PDU Startup Checklist (Single File)</title>
+  <style>
+:root {
+  --bg: #0a0c10;
+  --card: #16181d;
+  --card-border: #24272e;
+  --line: #2f333b;
+  --text: #e6e8eb;
+  --muted: #8a8f99;
+  --accent: #f4c20d;
+  --accent-dark: #c99a0a;
+  --input-bg: #1f2229;
+  --danger: #c0392b;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.45;
+}
+
+.top-nav {
+  background: #0f1116;
+  border-bottom: 1px solid #24272e;
+  padding: 8px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  font-size: 13px;
+}
+.top-nav .nav-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.top-nav .nav-brand {
+  color: #f4c20d;
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-size: 12px;
+  margin-right: 12px;
+}
+.top-nav .nav-links {
+  display: flex;
+  gap: 4px;
+}
+.top-nav .nav-link {
+  color: #e6e8eb;
+  padding: 4px 14px;
+  text-decoration: none;
+  border-radius: 4px;
+}
+.top-nav .nav-link:hover { background: #1f2229; color: #f4c20d; }
+.top-nav .nav-link.active { background: #1f2229; color: #f4c20d; font-weight: 600; }
+
+@media print {
+  .top-nav { display: none !important; }
+  .app { padding-top: 0 !important; margin-top: 0 !important; }
+}
+
+.app {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.brand-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.brand-header img { height: 42px; width: auto; }
+.brand-header .brand-text {
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: 1.5px;
+  font-weight: 600;
+}
+
+.page-header {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.page-header h1 {
+  margin: 0 0 4px;
+  font-size: 1.65rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.protocol {
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.subtext { margin: 4px 0; color: var(--muted); font-size: 0.95rem; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 18px;
+  margin-bottom: 18px;
+}
+.card h2 {
+  margin: 0 0 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+}
+.card h3 {
+  margin: 0 0 10px;
+  font-size: 0.9rem;
+  color: var(--accent);
+}
+
+.grid {
+  display: grid;
+  gap: 14px;
+}
+
+label {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+input[type="text"], input[type="date"], input[type="number"], textarea {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  margin-top: 4px;
+}
+
+button {
+  background: var(--accent);
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media print {
+  .card { page-break-inside: avoid; }
+  button { display: none; }
+}
+  </style>
+</head>
+<body>
+
+<div class="top-nav">
+  <div class="nav-inner">
+    <div class="nav-brand">VOLTZ FIELD COMMISSIONING</div>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">RPP Startup</a>
+      <a href="pdu-startup.html" class="nav-link active">PDU Startup</a>
+    </div>
+  </div>
+</div>
+
+<div class="app">
+  <div class="brand-header">
+    <img src="data:image/png;base64,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...O8rC/5Xy/Bnmr3xwz9kbIQ/s3iqVlJyB5sGYC//H0PQh/NttORDJoc37vipDbXIpJJN9FHuTTnN9rEVLUzrEgEs+Pgf9G1DUQovkmYvSfi0grs522TyOSVhTaEaI8zLmWDKK6TkII9lqKRP8zp+0TnuOfQiSsLyNSzztIMY71gJUIWa1xrs0tZDzDmdeOiMR2nLPvNc+45yBScDtC/Ds7+3en+PcrGylhpSgiD6qlHXPKPKdkdM2RQR6meSFtFsWEju8has62CGF9HHkg5saMvSHyUF2OqGnNCJHsgUgxYykS1iqkIMqJzjHjEXV0K+RBBJFcbqM0423Qs7kN8H+e319FiOzKkOtzJTqA/Z05xJEVwMcQTelxhFSVs72HkKKb1KwNIZkw0fldiokWlznfW5C/xzeccY6hqJL/HEnQ+BSi/oHcF4Woll3OdXci5Afyt7mWQZAVpISVwgPdB5ntbkF1BG2uNcNMRB35V0jbeIpv8IXI238mQj6XIKXN4jIOzkIeuKuQqkIu7kPI4XvOJ4ikcymSqvtx5CHbFCHMh5AHczqiqgWxgWeezU6/n3ja90LsTUH1bSRy7e7cNnfmmoRPIsbwpLLcM5xzhNn+ZiAkA0IyrsflLMQudjvwX8j1z0TUP1el2w0h7eXO+H0IgT6J3MM+RFqb6IwzKKSElUKQBWP0tqhR+yf3rR72QGwoiwP7pyCq1Y+c313O5tqN5iDSVhy2RwjolZC2PCL1gKg9tyD2J6+kdy7wPvJg7og8O14VyMVhiHoKQnIb4g9IXR+RYoL4rPP5FEJWFpKSOQk7IBJSEtwc+6tC2nahGEbSicRx7YVIVyc7+7POGOchRvmnnf2bOsd+O+bcc5G/16v9mGcsUqN7CinMmgdj8ndANSf3rx5mIkbn9QL7r0LKmt3p2bcMeVguRrx1zyeMvQuimgVzzA9HyM493pVUfuTpMxqRNlwC2RZ5dsYExjrbmf8Vzu+9EUnwSU+fNygl12ZEGrkRkW4+Q/8Iy0Akx78m9AOxC0LRNuadcztCRCAvjCWI9/I9ina2txC1cA9E2nKxDL83EIREn6UY8rAPch/eZJBIJayPOhSQBXP62aj1Dx/KmbgR5yBG4PMQyec0RILamaI9BMS2cyrygM9JGLsFsTldGtK2M3IXXMJyJbBfI0T5cSS+KoN4+KAYT3QFYuheRDGu6esUC/tOR8j3W4gq9hoSpvBpJJzgckR6PAd4zukHQpqrKEp9UdgE8VbGhTy4eAtRn69H4rleQwjoWOf6XCltMWKr60AI10XeudZfUXQg4Mz9JsSgfxtyvy5AVHRXotoHIb9BIyWsjzosoH1DjPEnDfVMRiAP+i8RKeASxM6zCnmDPxXo/y9EOrgJv3cvDB3IG//ekDYDkdBcaeZfCBF+15nHWiS+azbF+KSdgd8ihWzPQYjURNTBOzxj34aoQ2c41/Ya8iAfhJDhDYiR/kkkONaNlVqIeDKTMAzxoIbZ/ILQwOeA3yDSY7ez70hEBXaRR1TYbvwG/5eceV4QGPdmJNzhTGSdpoX8DV1PaQYh4/5IgYmo56o5Qw575XP03L0dKsM6WzXH7gQ1ZR7GxAvLG7jyCFZJmozc9bcj+p+OqIMTEOKIw0Cq93QgoQFBm9dERBo5DJEERyO2nTB7lov1CV+APAu5Pm98VS0qDU1EXhCDtil50IJIe6/iX9pU0etJJayPOhRgdSV2qwGCXrN3Yvpuj5DVxSSTFQzsgekk3EC/OUKuzzi/l1OMjo9CVLaEF0P21UKCWEypY2OwyBJuc6vo9aRG9xSNhPMR9eIp4A8UAyJriU8hUlFFbDIpykMqYaVoJKxADNzXIctphgJ/RGxhFSncmKI8pDasFClSNAxSlTBFihQNg5SwUqRI0TBICStFihQNg5SwUqRI0TD4fyaape630GldAAAAAElFTkSuQmCC" alt="Voltz Logo" />
+      <div>
+        <div class="brand-text">RAPTOR POWER SYSTEMS / VOLTZ</div>
+        <div style="font-size:10px; color:#8a8f99; letter-spacing:1px;">EST. 1994</div>
+      </div>
+    </div>
+
+    <header class="page-header">
+      <div class="protocol">SYSTEM PROTOCOL // PDU STARTUP</div>
+      <h1>PDU Startup Checklist</h1>
+      <p class="subtext">
+        Complete and email to RM/DoS upon completion. Minimum of 4 startups per day.
+      </p>
+    </header>
+
+    <div class="card">
+      <h2>Work Order Info</h2>
+      <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+        <label>Work Order #<input type="text" name="workOrder" /></label>
+        <label>Assigned Tech<input type="text" name="tech" /></label>
+        <label>Task<input type="text" name="task" /></label>
+        <label>PDU #<input type="text" name="pduNumber" /></label>
+        <label>Serial #<input type="text" name="serial" /></label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Required Information</h2>
+      <div class="grid">
+        <label>1. Tech Name<input type="text" name="techName" /></label>
+        <label>2. Date<input type="date" name="date" onclick="this.showPicker && this.showPicker()" /></label>
+        <label>3. Serial Number Correct <input type="checkbox" name="serialCorrect" /></label>
+        <label>4. Commissioning Company (if applicable)<input type="text" name="commissioningCompany" /></label>
+        <label>5. POC<input type="text" name="poc" /></label>
+        <label>6. Unit KVA Rating<input type="text" name="kvaRating" /></label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Pre Startup Checklist</h2>
+      <div class="grid">
+        <label><input type="checkbox" name="p7" /> 7. LOTO &amp; Live Dead Live Complete</label>
+        <label><input type="checkbox" name="p8" /> 8. Is this a permanent installation?</label>
+        <label><input type="checkbox" name="p9" /> 9. Unit Exterior free of damage?</label>
+        <label><input type="checkbox" name="p10" /> 10. Exterior panels removed</label>
+        <label><input type="checkbox" name="p11" /> 11. Interior free of damage?</label>
+        <label><input type="checkbox" name="p12" /> 12. Packing material removed</label>
+        <label><input type="checkbox" name="p13" /> 13. Check all control and power wire crimps/plugs for good connections</label>
+        <label><input type="checkbox" name="p14" /> 14. Verify customer wire size is correct</label>
+        <label><input type="checkbox" name="p15" /> 15. Cabinet properly grounded; verify external ground wire brought into the cabinet and connected to the ground bus bar</label>
+        <label><input type="checkbox" name="p16" /> 16. Cleaned inside and out of construction debris</label>
+        <label><input type="checkbox" name="p17" /> 17. Verify Neutral-Ground bond installed</label>
+        <label><input type="checkbox" name="p18" /> 18. Wiring harnesses inspected for worn/damaged insulation</label>
+        <label><input type="checkbox" name="p19" /> 19. Unit free of condensation or water ingress (notify customer + photos if water found)</label>
+        <label><input type="checkbox" name="p20" /> 20. Evidence of previous water infiltration?</label>
+        <label><input type="checkbox" name="p21" /> 21. All bare metals shielded by phase insulators and at least 1 inch from door (when closed) and panelboard</label>
+        <label><input type="checkbox" name="p22" /> 22. All breakers are installed and opened</label>
+        <label><input type="checkbox" name="p23" /> 23. X-former connections torque marked</label>
+        <label><input type="checkbox" name="p24" /> 24. X-former jumpers in correct position</label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Revision Checklist</h2>
+      <div class="grid">
+        <label><input type="checkbox" name="r25" /> 25. Finger Safe Mod</label>
+        <label><input type="checkbox" name="r26" /> 26. Riser Mod</label>
+        <label><input type="checkbox" name="r27" /> 27. Arc Flash Mitigation Mod</label>
+        <label><input type="checkbox" name="r28" /> 28. PQM Meter installed</label>
+        <label>29. Bus Configuration <input type="text" name="busConfig" /></label>
+        <label>30. CT Manufacturer <input type="text" name="ctManufacturer" /></label>
+        <label><input type="checkbox" name="r31" /> 31. Verify Breaker Settings</label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Initial Power Checks</h2>
+      <p>Install Phase Rotation meter. Removed LOTO. Open all control breakers. Close feeder to PDU.</p>
+      <div class="grid">
+        <label>32. Record Phase Rotation <input type="text" name="phaseRotation" /></label>
+      </div>
+      <p><strong>If Phase Rotation is good, open feeder &amp; remove phase rotation meter. It must be corrected before proceeding. Once meter is removed, close feeder, close control breakers.</strong></p>
+
+      <h3>Input Voltages</h3>
+      <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));">
+        <label>33. Input Display A-B <input type="text" name="inDispAB" /></label>
+        <label>Input Display B-C <input type="text" name="inDispBC" /></label>
+        <label>Input Display C-A <input type="text" name="inDispCA" /></label>
+        <label>34. Input Meter A-B <input type="text" name="inMeterAB" /></label>
+        <label>Input Meter B-C <input type="text" name="inMeterBC" /></label>
+        <label>Input Meter C-A <input type="text" name="inMeterCA" /></label>
+      </div>
+
+      <h3>Input L-N Voltages</h3>
+      <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));">
+        <label>35. Display A-N <input type="text" name="inDispAN" /></label>
+        <label>Display B-N <input type="text" name="inDispBN" /></label>
+        <label>Display C-N <input type="text" name="inDispCN" /></label>
+        <label>36. Meter A-N <input type="text" name="inMeterAN" /></label>
+        <label>Meter B-N <input type="text" name="inMeterBN" /></label>
+        <label>Meter C-N <input type="text" name="inMeterCN" /></label>
+      </div>
+
+      <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));">
+        <label>37. Display Current A/B/C <input type="text" name="inDispCurrents" /></label>
+        <label>38. Meter Current A/B/C <input type="text" name="inMeterCurrents" /></label>
+        <label>39. DC Voltage <input type="text" name="dcVoltage" /></label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Functional Checks</h2>
+      <p>Open, Close and Trip each breaker. Verify HMI status:</p>
+      <div class="grid">
+        <label><input type="checkbox" name="f40" /> 40. Input breaker</label>
+        <label><input type="checkbox" name="f41" /> 41. Output breaker 1</label>
+        <label><input type="checkbox" name="f42" /> 42. Output breaker 2</label>
+        <label><input type="checkbox" name="f43" /> 43. Output breaker 3</label>
+        <label><input type="checkbox" name="f44" /> 44. Output breaker 4</label>
+        <label><input type="checkbox" name="f45" /> 45. Output breaker 5</label>
+        <label><input type="checkbox" name="f46" /> 46. Output breaker 6</label>
+        <label><input type="checkbox" name="f47" /> 47. Output breaker 7</label>
+        <label><input type="checkbox" name="f48" /> 48. Output breaker 8</label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Customer Communication Integration</h2>
+      <div class="grid">
+        <label>49. Digital PDU Name Set <input type="checkbox" name="c49" /></label>
+        <label>50. HMI IP Address <input type="text" name="hmiIP" /></label>
+        <label>51. Gateway IP Address <input type="text" name="gatewayIP" /></label>
+        <label>52. Siemens Meter IP Address <input type="text" name="siemensIP" /></label>
+        <label>53. Verify all meters communicating &amp; data present <input type="checkbox" name="c53" /></label>
+        <label>54. Verify Gateway polling data <input type="checkbox" name="c54" /></label>
+      </div>
+
+      <h3>Firmware Versions</h3>
+      <div class="grid">
+        <label>55. HMI Firmware <input type="text" name="hmiFW" /></label>
+        <label>56. Input Meter FW (update if &lt;6.36) <input type="text" name="inputMeterFW" /></label>
+        <label>57. Input Module FW (update if &lt;v1.28) <input type="text" name="inputModuleFW" /></label>
+        <label>58-59. Output Meter Modules FW (update if &lt;1.13) <input type="text" name="outModulesFW" /></label>
+        <label>60. Aux Meter FW <input type="text" name="auxFW" /></label>
+        <label>61. Gateway FW <input type="text" name="gatewayFW" /></label>
+        <label>62. Alarm points enabled? <input type="checkbox" name="c62" /></label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Final Power Checks</h2>
+      <p>Close all output breakers. Apply load if applicable.</p>
+      <div class="grid">
+        <label>63-66. Output Voltages (Display + Meter L-L / L-N) — use text fields</label>
+        <label>67. Total Output Current A/B/C <input type="text" name="outCurrent" /></label>
+        <label>68. Measured Current +/-2% <input type="text" name="measuredCurr" /></label>
+        <label>69. Output Power KW <input type="text" name="powerKW" /> KVA <input type="text" name="powerKVA" /></label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Close Out</h2>
+      <div class="grid">
+        <label>70. Job Complete <input type="checkbox" name="close70" /></label>
+        <label>71. Work Summary<textarea name="summary" rows="3"></textarea></label>
+        <label>72. Onsite Hours <input type="number" step="0.1" name="onsiteH" /></label>
+        <label>73. Travel Hours <input type="number" step="0.1" name="travelH" /></label>
+        <label>74. Total Miles <input type="number" name="miles" /></label>
+        <label>75. Condition left in <input type="text" name="condition" /></label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Technician Signature</h2>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        <div>
+          <label>Signature</label><br>
+          <canvas id="sig" width="280" height="70" style="border:1px solid #333;background:#fff;"></canvas><br>
+          <button type="button" onclick="clearSig()">Clear</button>
+        </div>
+        <div>
+          <label>Date <input type="date" name="sigDate" /></label>
+          <label>Print Name <input type="text" name="printName" /></label>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:20px;">
+      <button onclick="savePDU()">Save</button>
+      <button onclick="printPDU()">Print to PDF</button>
+    </div>
+  </div>
+
+<script>
+function savePDU() {
+  const data = {};
+  document.querySelectorAll('input, textarea').forEach(el => {
+    data[el.name] = (el.type === 'checkbox') ? el.checked : el.value;
+  });
+  localStorage.setItem('voltz_pdu_data', JSON.stringify(data));
+  alert('PDU form saved locally');
+}
+
+function loadPDU() {
+  const data = JSON.parse(localStorage.getItem('voltz_pdu_data') || '{}');
+  document.querySelectorAll('input, textarea').forEach(el => {
+    if (data[el.name] !== undefined) {
+      if (el.type === 'checkbox') el.checked = data[el.name];
+      else el.value = data[el.name];
+    }
+  });
+}
+
+function printPDU() {
+  const serial = document.querySelector('[name="serial"]')?.value || 'NOSER';
+  const date = document.querySelector('[name="date"]')?.value || new Date().toISOString().slice(0,10);
+  document.title = `Voltz-PDU-Startup-${serial}-${date}`;
+  window.print();
+}
+
+let sigCtx;
+function initSig() {
+  const c = document.getElementById('sig');
+  if (!c) return;
+  sigCtx = c.getContext('2d');
+  sigCtx.strokeStyle = '#000';
+  sigCtx.lineWidth = 2;
+  let drawing = false;
+  c.onmousedown = e => { drawing = true; sigCtx.beginPath(); sigCtx.moveTo(e.offsetX, e.offsetY); };
+  c.onmousemove = e => { if (drawing) { sigCtx.lineTo(e.offsetX, e.offsetY); sigCtx.stroke(); } };
+  c.onmouseup = () => drawing = false;
+  c.ontouchstart = e => { drawing = true; const r = c.getBoundingClientRect(); sigCtx.beginPath(); sigCtx.moveTo(e.touches[0].clientX-r.left, e.touches[0].clientY-r.top); };
+  c.ontouchmove = e => { if (drawing) { const r = c.getBoundingClientRect(); sigCtx.lineTo(e.touches[0].clientX-r.left, e.touches[0].clientY-r.top); sigCtx.stroke(); e.preventDefault(); } };
+  c.ontouchend = () => drawing = false;
+}
+window.clearSig = () => { if (sigCtx) sigCtx.clearRect(0,0,280,70); };
+
+window.onload = () => {
+  loadPDU();
+  initSig();
+};
+</script>
+</body>
+</html>
