@@ -327,10 +327,13 @@ button {
 
       <div style="text-align:center; margin-top:20px;">
         <button type="button" onclick="saveSV()">Save</button>
-        <button type="button" onclick="printSV()" title="Save the PDF then upload to the Google Drive folder">Print to PDF</button>
+        <button type="button" onclick="printSV()" title="Print to PDF, then upload the saved file to the Google Drive folder (opens after you save)">Print to PDF</button>
         <button type="button" onclick="window.open('https://drive.google.com/drive/folders/1A-smlu8EdYGwOcQSEInHHLXD8xxVms91?usp=sharing', '_blank')">Open Google Drive Folder</button>
       </div>
-      <small style="display:block; text-align:center; margin-top:8px; color:#8a8f99; font-size:0.8rem;">After saving the PDF, please upload it to <a href="https://drive.google.com/drive/folders/1A-smlu8EdYGwOcQSEInHHLXD8xxVms91?usp=sharing" target="_blank" style="color:#f4c20d;">this Google Drive folder</a></small>
+      <small style="display:block; text-align:center; margin-top:8px; color:#8a8f99; font-size:0.8rem;">
+  1. Click <strong>Print to PDF</strong> and select "Save as PDF"<br>
+  2. After saving, the <a href="https://drive.google.com/drive/folders/1A-smlu8EdYGwOcQSEInHHLXD8xxVms91?usp=sharing" target="_blank" style="color:#f4c20d;">Google Drive folder</a> will open automatically — upload the file there
+</small>
     </form>
   </div>
 
@@ -402,9 +405,6 @@ function initPhotoUpload() {
 }
 
 function printSV() {
-  // Open the Google Drive folder automatically
-  window.open("https://drive.google.com/drive/folders/1A-smlu8EdYGwOcQSEInHHLXD8xxVms91?usp=sharing", "_blank");
-
   const form = document.getElementById('svForm');
   let photoSection = document.getElementById('printPhotos');
   
@@ -434,6 +434,11 @@ function printSV() {
   const date = document.querySelector('[name="date"]')?.value || new Date().toISOString().slice(0,10);
   document.title = `Voltz-Field-Report-${date}`;
   
+  const openDrive = () => {
+    window.open("https://drive.google.com/drive/folders/1A-smlu8EdYGwOcQSEInHHLXD8xxVms91?usp=sharing", "_blank");
+    window.removeEventListener("afterprint", openDrive);
+  };
+  window.addEventListener("afterprint", openDrive, { once: true });
   window.print();
   
   setTimeout(() => {
