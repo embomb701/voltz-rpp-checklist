@@ -1,0 +1,12 @@
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    # Allow embedding from your Odoo domain later if needed
+    # Content-Security-Policy = "frame-ancestors 'self' https://your-odoo-domain.com"
+
+[build.environment]
+  # No build command needed for pure static HTML
