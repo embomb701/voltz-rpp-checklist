@@ -325,10 +325,21 @@ button.danger {
   }
 }
 
+.top-nav { background:#0f1116; border-bottom:1px solid #24272e; padding:8px 16px; position:sticky; top:0; z-index:100; font-size:13px; } .top-nav .nav-inner { max-width:980px; margin:0 auto; display:flex; align-items:center; gap:16px; flex-wrap:wrap; } .top-nav .nav-brand { color:#f4c20d; font-weight:600; letter-spacing:1px; font-size:12px; margin-right:12px; } .top-nav .nav-links { display:flex; gap:4px; } .top-nav .nav-link { color:#e6e8eb; padding:4px 14px; text-decoration:none; border-radius:4px; } .top-nav .nav-link:hover { background:#1f2229; color:#f4c20d; } .top-nav .nav-link.active { background:#1f2229; color:#f4c20d; font-weight:600; } @media print { .top-nav { display:none !important; } }
 </style>
 </head>
-<body><div style="background:#1f2229; padding:8px 12px; font-size:12px; color:#f4c20d; text-align:center; border-bottom:1px solid #333;">
-Single-file version • Works offline • Download and open directly on any device
+<body>
+<div class="top-nav">
+  <div class="nav-inner">
+    <div class="nav-brand">VOLTZ FIELD COMMISSIONING</div>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link active">RPP Startup</a>
+      <a href="pdu-startup.html" class="nav-link">PDU Startup</a>
+      <a href="troubleshooting.html" class="nav-link">Troubleshooting</a>
+      <a href="site-visit.html" class="nav-link" title="General site visit or any other field report">Site Visit</a>
+    </div>
+  </div>
+</div><div style="background:#1f2229; padding:8px 12px; font-size:12px; color:#f4c20d; text-align:center; border-bottom:1px solid #333;">
 </div>
   <div class="app">
     <div class="brand-header">
@@ -343,7 +354,6 @@ Single-file version • Works offline • Download and open directly on any devi
       <div class="protocol">SYSTEM PROTOCOL // FIELD COMMISSIONING</div>
       <h1>RPP Startup Checklist</h1>
       <p class="subtext">
-        Offline-capable. Fill out on phone, tablet, or laptop. Print to PDF and archive.
       </p>
       <p class="notice">
         After printing, save the PDF into the <strong>submissions</strong> folder in this directory.
