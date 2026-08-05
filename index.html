@@ -91,7 +91,6 @@ body {
   letter-spacing: 0.5px;
 }
 
-
 .page-header h1 {
   margin: 0 0 4px;
   font-size: 1.65rem;
@@ -376,8 +375,6 @@ button.danger {
 .photo-preview { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; } .photo-preview img { width:80px; height:80px; object-fit:cover; border-radius:4px; border:1px solid #333; } .photo-preview .photo-item { position:relative; } .photo-preview .remove-btn { position:absolute; top:-4px; right:-4px; background:#f4c20d; color:#111; border:none; width:16px; height:16px; border-radius:50%; font-size:10px; cursor:pointer; }
 .field-service { margin:2px 0 10px; color:#8a8f99; font-size:0.9rem; font-weight:600; letter-spacing:0.5px; }
 
-.yes-no-group { display: flex; gap: 12px; align-items: center; }
-.yes-no-group label { font-size: 0.85rem; white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -446,53 +443,59 @@ button.danger {
         </div>
 
         <div class="grid two">
-          <div>
-            <label>Permanent installation?</label>
-            <div class="yes-no-group">
-              <label><input type="checkbox" name="permanent_yes" /> <strong>Yes</strong></label>
-              <label><input type="checkbox" name="permanent_no" /> <strong>No</strong></label>
-            </div>
-          </div>
+          <label>
+            Permanent installation?
+            <select name="permanentInstallation">
+              <option value=""></option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
 
-          <div>
-            <label>Unit exterior free of damage?</label>
-            <div class="yes-no-group">
-              <label><input type="checkbox" name="exteriorDamage_yes" /> <strong>Yes</strong></label>
-              <label><input type="checkbox" name="exteriorDamage_no" /> <strong>No</strong></label>
-            </div>
-          </div>
+          <label>
+            Unit exterior free of damage?
+            <select name="unitExteriorDamage">
+              <option value=""></option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
 
-          <div>
-            <label>Interior free of damage?</label>
-            <div class="yes-no-group">
-              <label><input type="checkbox" name="interiorDamage_yes" /> <strong>Yes</strong></label>
-              <label><input type="checkbox" name="interiorDamage_no" /> <strong>No</strong></label>
-            </div>
-          </div>
+          <label>
+            Interior free of damage?
+            <select name="interiorDamage">
+              <option value=""></option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
 
-          <div>
-            <label>Cleaned inside and out of construction debris?</label>
-            <div class="yes-no-group">
-              <label><input type="checkbox" name="cleanedDebris_yes" /> <strong>Yes</strong></label>
-              <label><input type="checkbox" name="cleanedDebris_no" /> <strong>No</strong></label>
-            </div>
-          </div>
+          <label>
+            Cleaned inside and out of construction debris?
+            <select name="cleanedDebris">
+              <option value=""></option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
 
-          <div>
-            <label>All bare metals shielded / clearance acceptable?</label>
-            <div class="yes-no-group">
-              <label><input type="checkbox" name="bareMetals_yes" /> <strong>Yes</strong></label>
-              <label><input type="checkbox" name="bareMetals_no" /> <strong>No</strong></label>
-            </div>
-          </div>
+          <label>
+            All bare metals shielded / clearance acceptable?
+            <select name="bareMetalsShielded">
+              <option value=""></option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
 
-          <div>
-            <label>All breakers installed and opened?</label>
-            <div class="yes-no-group">
-              <label><input type="checkbox" name="breakersOpened_yes" /> <strong>Yes</strong></label>
-              <label><input type="checkbox" name="breakersOpened_no" /> <strong>No</strong></label>
-            </div>
-          </div>
+          <label>
+            All breakers installed and opened?
+            <select name="breakersInstalledOpened">
+              <option value=""></option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
         </div>
 
         <div class="check-list">
@@ -597,29 +600,33 @@ button.danger {
       <section class="card">
         <h2>Customer Communication Integration</h2>
         <div class="grid two">
-          <div>
-            <label>Comms wired according to submittal?</label>
-            <div class="yes-no-group">
-              <label><input type="checkbox" name="commsWired_yes" /> <strong>Yes</strong></label>
-              <label><input type="checkbox" name="commsWired_no" /> <strong>No</strong></label>
-            </div>
-          </div>
+          <label>
+            Comms wired according to submittal?
+            <select name="commsWired">
+              <option value=""></option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
 
-          <div>
-            <label>Power up sequence followed?</label>
-            <div class="yes-no-group">
-              <label><input type="checkbox" name="powerUpSequence_yes" /> <strong>Yes</strong></label>
-              <label><input type="checkbox" name="powerUpSequence_no" /> <strong>No</strong></label>
-            </div>
-          </div>
+          <label>
+            Power up sequence followed?
+            <select name="powerUpSequence">
+              <option value=""></option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
 
-          <div>
-            <label>Networking completed as expected?</label>
-            <div class="yes-no-group">
-              <label><input type="checkbox" name="networking_yes" /> <strong>Yes</strong></label>
-              <label><input type="checkbox" name="networking_no" /> <strong>No</strong></label>
-            </div>
-          </div>
+          <label>
+            Networking completed as expected?
+            <select name="networkingCompleted">
+              <option value=""></option>
+              <option>Yes</option>
+              <option>No</option>
+              <option>N/A</option>
+            </select>
+          </label>
 
           <label>
             RTU Panel Firmware Version
@@ -670,13 +677,14 @@ button.danger {
       <section class="card">
         <h2>Close Out</h2>
         <div class="grid two">
-          <div>
-            <label>Unit powered off and locked?</label>
-            <div class="yes-no-group">
-              <label><input type="checkbox" name="poweredOff_yes" /> <strong>Yes</strong></label>
-              <label><input type="checkbox" name="poweredOff_no" /> <strong>No</strong></label>
-            </div>
-          </div>
+          <label>
+            Unit powered off and locked?
+            <select name="poweredOffLocked">
+              <option value=""></option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </label>
 
           <label>
             Onsite Hours

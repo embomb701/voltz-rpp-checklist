@@ -212,9 +212,6 @@ button {
   .photo-preview { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; } .photo-preview img { width:80px; height:80px; object-fit:cover; border-radius:4px; border:1px solid #333; } .photo-preview .photo-item { position:relative; } .photo-preview .remove-btn { position:absolute; top:-4px; right:-4px; background:#f4c20d; color:#111; border:none; width:16px; height:16px; border-radius:50%; font-size:10px; cursor:pointer; }
 .field-service { margin:2px 0 10px; color:#8a8f99; font-size:0.9rem; font-weight:600; letter-spacing:0.5px; }
 
-.yes-no-group { display: flex; gap: 16px; align-items: center; margin-top: 2px; }
-.yes-no-group label { font-size: 0.9rem; display: flex; align-items: center; gap: 4px; }
-
 </style>
 </head>
 <body>
@@ -266,22 +263,28 @@ button {
       <h2>Pre Startup Checklist</h2>
       <div class="grid">
         <label><input type="checkbox" name="p7" /> 7. LOTO &amp; Live Dead Live Complete</label>
-        <label>8. Is this a permanent installation?</label>
-        <div class="yes-no-group">
-          <label><input type="checkbox" name="p8_yes" /> <strong>Yes</strong></label>
-          <label><input type="checkbox" name="p8_no" /> <strong>No</strong></label>
-        </div>
-        <label>9. Unit Exterior free of damage?</label>
-        <div class="yes-no-group">
-          <label><input type="checkbox" name="p9_yes" /> <strong>Yes</strong></label>
-          <label><input type="checkbox" name="p9_no" /> <strong>No</strong></label>
-        </div>
+        <label>8. Is this a permanent installation?
+          <select name="p8">
+            <option value=""></option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </label>
+        <label>9. Unit Exterior free of damage?
+          <select name="p9">
+            <option value=""></option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </label>
         <label><input type="checkbox" name="p10" /> 10. Exterior panels removed</label>
-        <label>11. Interior free of damage?</label>
-        <div class="yes-no-group">
-          <label><input type="checkbox" name="p11_yes" /> <strong>Yes</strong></label>
-          <label><input type="checkbox" name="p11_no" /> <strong>No</strong></label>
-        </div>
+        <label>11. Interior free of damage?
+          <select name="p11">
+            <option value=""></option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </label>
         <label><input type="checkbox" name="p12" /> 12. Packing material removed</label>
         <label><input type="checkbox" name="p13" /> 13. Check all control and power wire crimps/plugs for good connections</label>
         <label><input type="checkbox" name="p14" /> 14. Verify customer wire size is correct</label>
@@ -290,11 +293,13 @@ button {
         <label><input type="checkbox" name="p17" /> 17. Verify Neutral-Ground bond installed</label>
         <label><input type="checkbox" name="p18" /> 18. Wiring harnesses inspected for worn/damaged insulation</label>
         <label><input type="checkbox" name="p19" /> 19. Unit free of condensation or water ingress (notify customer + photos if water found)</label>
-        <label>20. Evidence of previous water infiltration?</label>
-        <div class="yes-no-group">
-          <label><input type="checkbox" name="p20_yes" /> <strong>Yes</strong></label>
-          <label><input type="checkbox" name="p20_no" /> <strong>No</strong></label>
-        </div>
+        <label>20. Evidence of previous water infiltration?
+          <select name="p20">
+            <option value=""></option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
+        </label>
         <label><input type="checkbox" name="p21" /> 21. All bare metals shielded by phase insulators and at least 1 inch from door (when closed) and panelboard</label>
         <label><input type="checkbox" name="p22" /> 22. All breakers installed and in open position</label>
         <label><input type="checkbox" name="p23" /> 23. X-former connections torqued and marked</label>
