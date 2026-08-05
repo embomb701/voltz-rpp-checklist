@@ -440,14 +440,8 @@ button {
       <div class="card">
         <h2>Photos</h2>
         <input type="file" id="photoInputPDU" accept="image/*" multiple />
-        <div id="photoPreviewPDU" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;"></div>
+        <div id="photoPreviewPDU" class="photo-preview"></div>
         <small style="color:#8a8f99; font-size:0.8rem;">Photos will be included when printing to PDF.</small>
-      </div>
-      <div class="card">
-        <h2>Photos</h2>
-        <input type="file" id="photoInputPDU" accept="image/*" multiple />
-        <div id="photoPreviewPDU" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;"></div>
-        <small style="color:#8a8f99;font-size:0.8rem;">Photos will be included when printing to PDF.</small>
       </div>
       <button onclick="savePDU()">Save</button>
       <button onclick="printPDU()" title="Print to PDF, then save to the Google Drive folder (see note below)">Print to PDF</button>
@@ -460,29 +454,92 @@ button {
   </div>
 
 <script>
+let pduPhotos = [];
+
 function savePDU() {
   const data = {};
-  document.querySelectorAll('input, textarea').forEach(el => {
-    data[el.name] = (el.type === 'checkbox') ? el.checked : el.value;
+  document.querySelectorAll('input, textarea, select').forEach(el => {
+    if (!el.name) return;
+    if (el.type === 'checkbox') {
+      data[el.name] = el.checked;
+    } else {
+      data[el.name] = el.value;
+    }
   });
+  data.photos = pduPhotos;
   localStorage.setItem('voltz_pdu_data', JSON.stringify(data));
   alert('PDU form saved locally');
 }
 
 function loadPDU() {
-  const data = JSON.parse(localStorage.getItem('voltz_pdu_data') || '{}');
-  document.querySelectorAll('input, textarea').forEach(el => {
+  const saved = localStorage.getItem('voltz_pdu_data');
+  if (!saved) return;
+  const data = JSON.parse(saved);
+  document.querySelectorAll('input, textarea, select').forEach(el => {
     if (data[el.name] !== undefined) {
       if (el.type === 'checkbox') el.checked = data[el.name];
       else el.value = data[el.name];
     }
   });
+  if (data.photos && Array.isArray(data.photos)) {
+    pduPhotos = data.photos;
+    renderPDUPhotos();
+  }
+}
+
+function renderPDUPhotos() {
+  const container = document.getElementById('photoPreviewPDU');
+  if (!container) return;
+  container.innerHTML = '';
+  pduPhotos.forEach((src, index) => {
+    const div = document.createElement('div');
+    div.className = 'photo-item';
+    div.innerHTML = `<img src="${src}" />`;
+    const btn = document.createElement('button');
+    btn.className = 'remove-btn';
+    btn.textContent = '×';
+    btn.onclick = () => {
+      pduPhotos.splice(index, 1);
+      renderPDUPhotos();
+    };
+    div.appendChild(btn);
+    container.appendChild(div);
+  });
 }
 
 function printPDU() {
+  // Inject photos into a printable section if not already
+  const form = document.querySelector('form') || document.body;
+  let photoSection = document.getElementById('printPhotosPDU');
+  
+  if (!photoSection && pduPhotos.length > 0) {
+    photoSection = document.createElement('div');
+    photoSection.id = 'printPhotosPDU';
+    photoSection.style.marginTop = '20px';
+    photoSection.style.pageBreakBefore = 'always';
+    photoSection.innerHTML = '<h2 style="color:#f4c20d;font-size:1rem;margin-bottom:8px;">Photos</h2>';
+    const imgContainer = document.createElement('div');
+    imgContainer.style.display = 'flex';
+    imgContainer.style.flexWrap = 'wrap';
+    imgContainer.style.gap = '8px';
+    
+    pduPhotos.forEach(src => {
+      const img = document.createElement('img');
+      img.src = src;
+      img.style.maxWidth = '45%';
+      img.style.border = '1px solid #333';
+      img.style.borderRadius = '4px';
+      imgContainer.appendChild(img);
+    });
+    
+    photoSection.appendChild(imgContainer);
+    form.parentNode.insertBefore(photoSection, form.nextSibling);
+  }
+  
   const serial = document.querySelector('[name="serial"]')?.value || 'NOSER';
   const date = document.querySelector('[name="date"]')?.value || new Date().toISOString().slice(0,10);
-  document.title = `Voltz-PDU-Startup-${serial}-${date}`;  window.print();
+  document.title = `Voltz-PDU-Startup-${serial}-${date}`;
+  window.print();
 }
 
 let sigCtx;
@@ -500,11 +557,28 @@ function initSig() {
   c.ontouchmove = e => { if (drawing) { const r = c.getBoundingClientRect(); sigCtx.lineTo(e.touches[0].clientX-r.left, e.touches[0].clientY-r.top); sigCtx.stroke(); e.preventDefault(); } };
   c.ontouchend = () => drawing = false;
 }
+
 window.clearSig = () => { if (sigCtx) sigCtx.clearRect(0,0,280,70); };
 
 window.onload = () => {
   loadPDU();
   initSig();
+  
+  // Photo upload support
+  const input = document.getElementById('photoInputPDU');
+  if (input) {
+    input.addEventListener('change', function() {
+      Array.from(this.files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          pduPhotos.push(e.target.result);
+          renderPDUPhotos();
+        };
+        reader.readAsDataURL(file);
+      });
+      this.value = '';
+    });
+  }
 };
 </script>
 </body>
